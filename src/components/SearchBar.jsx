@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+// import background from "../../assets/images/background.svg";
 const SearchBar = ({ onSearch }) => {
   const [city, setCity] = useState("");
 
@@ -15,7 +15,7 @@ const SearchBar = ({ onSearch }) => {
       <div className="flex justify-between items-center flex-row">
         <h1>Skyline</h1>
 
-        <form onsubmit={handleSubmit} className="w-full max-w-md">
+        <form onSubmit={handleSubmit} className="w-full max-w-md">
           <div className="flex gap-4">
             <input
               type="text"
@@ -34,6 +34,12 @@ const SearchBar = ({ onSearch }) => {
           </div>
         </form>
       </div>
+      {/* <img
+        src={background}
+        style={{ backgroundImage: `url(${background})` }}
+        className="w-full h-15 rounded-lg object-cover mt-4"
+        alt="background"
+      /> */}
     </div>
   );
 };

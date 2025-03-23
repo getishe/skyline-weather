@@ -1,12 +1,36 @@
+import React, { useState, useEffect } from "react";
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
 import "./App.css";
-import SearchBar from "./components/SearchBar/SearchBar";
-function App() {
+
+const App = () => {
+  const [weather, setWeather] = useState(null);
+  const [city, setCity] = useState("London");
+  const [unit, setUnit] = useState("C");
+
+  useEffect(() => {
+    fetchWeather(city);
+  }, [city]);
+
+  const fetchWeather = async (city) => {
+    const API_KEY = "YOUR_API_KEY";
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    );
+    const data = await response.json();
+    setWeather(data);
+  };
+
   return (
-    <div>
-      <SearchBar />
+    <div className="app">
+      <SearchBar onSearch={setCity} />
+      <WeatherCard weather={weather} unit={unit} />
+      <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
+        Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
+      </button>
     </div>
   );
-}
+};
 
 export default App;
 

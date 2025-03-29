@@ -23,6 +23,7 @@ const App = () => {
 
   return (
     <div className="app">
+      {/* hello */}
       <SearchBar onSearch={setCity} />
       <WeatherCard weather={weather} unit={unit} />
       <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>

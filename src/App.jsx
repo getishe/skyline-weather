@@ -7,26 +7,43 @@ const App = () => {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("London");
   const [unit, setUnit] = useState("C");
+  const [forecast, setForecast] = useState(null);
 
   useEffect(() => {
     fetchWeather(city);
   }, [city]);
 
   const fetchWeather = async (city) => {
-    const API_KEY =
-      "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}";
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-    );
-    const data = await response.json();
-    setWeather(data);
+    try {
+      const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+
+      // Fetch current weather
+      const weatherResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+      );
+      if (!weatherResponse.ok) throw new Error("Weather data fetch failed");
+      const weatherData = await weatherResponse.json();
+      setWeather(weatherData);
+
+      // Fetch forecast
+      const forecastResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
+      );
+      if (!forecastResponse.ok) throw new Error("Forecast data fetch failed");
+      const forecastData = await forecastResponse.json();
+      setForecast(forecastData);
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      setWeather(null);
+      setForecast(null);
+    }
   };
 
   return (
     <div className="app">
       {/* hello */}
       <SearchBar onSearch={setCity} />
-      <WeatherCard weather={weather} unit={unit} />
+      <WeatherCard weather={weather} forecast={forecast} unit={unit} />
       <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
         Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
       </button>

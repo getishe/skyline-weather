@@ -15,6 +15,7 @@ const App = () => {
 
   const fetchWeather = async (city) => {
     try {
+      // Check if the API key is set in the environment variables
       const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
       // Fetch current weather

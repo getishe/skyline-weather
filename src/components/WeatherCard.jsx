@@ -1,20 +1,46 @@
 import React from "react";
 
+/**
+ * WeatherCard Component
+ * Displays current weather information
+ * @param {Object} weather - Weather data from API
+ * @param {string} unit - Temperature unit (C/F)
+ */
 const WeatherCard = ({ weather, unit }) => {
-  if (!weather) return <p> Loading....</p>;
+  // Debug logging
+  console.log("Weather object:", weather);
 
-  if (weather.cod !== 200) {
-    return <p>City not found</p>;
+  // Loading state check
+  if (!weather || Object.keys(weather).length === 0) return <p> Loading....</p>;
+
+  // Error state check
+  if (weather.cod && weather.cod !== 200) {
+    return (
+      <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
+        <p className="text-xl text-red-600">Forecast not found</p>
+      </div>
+    );
   }
+
+  // Main weather display
   return (
     <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
+      {/* City name */}
       <h1 className="text-2xl font-bold">{weather.name}</h1>
+
+      {/* Weather description */}
       <p className="text-lg">{weather.weather[0].description}</p>
+
+      {/* Temperature */}
       <p className="text-lg">
         {weather.main.temp}°{unit}
       </p>
+
+      {/* Additional weather details */}
       <p className="text-lg">Humidity: {weather.main.humidity}%</p>
       <p className="text-lg">Wind Speed: {weather.wind.speed} m/s</p>
+
+      {/* Weather icon */}
       <img
         src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
         alt={weather.weather[0].description}

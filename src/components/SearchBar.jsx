@@ -1,13 +1,22 @@
 import React, { useState } from "react";
-// import background from "../../assets/images/background.svg";
-const SearchBar = ({ onSearch }) => {
-  const [city, setCity] = useState("");
 
+/**
+ * SearchBar Component
+ * Handles user input for searching cities
+ * @param {Function} onSearch - Callback function to handle search
+ */
+const SearchBar = ({ onSearch }) => {
+  const [city, setCity] = useState(""); // Local state for input field
+
+  /**
+   * Handle form submission
+   * @param {Event} e - Form submit event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(city);
-    onSearch(city);
-    setCity("");
+    onSearch(city); // Call parent component's search handler
+    setCity(""); // Clear input after search
   };
 
   return (

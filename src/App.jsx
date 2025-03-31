@@ -3,38 +3,63 @@ import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 import "./App.css";
 
+/**
+ * Main App Component
+ * Manages the application state and coordinates between components
+ */
 const App = () => {
-  const [weather, setWeather] = useState(null);
-  const [city, setCity] = useState("London");
-  const [unit, setUnit] = useState("C");
-  const [forecast, setForecast] = useState(null);
+  // State Management
+  const [weather, setWeather] = useState(null); // Current weather data
+  const [city, setCity] = useState("London"); // Selected city
+  const [unit, setUnit] = useState("C"); // Temperature unit (C/F)
+  const [forecast, setForecast] = useState(null); // Forecast data
+  const [error, setError] = useState(null); // Error state
 
+  // Fetch weather data when city changes
   useEffect(() => {
     fetchWeather(city);
   }, [city]);
 
+  /**
+   * Fetches both current weather and forecast data from OpenWeather API
+   * @param {string} city - City name to fetch weather for
+   */
   const fetchWeather = async (city) => {
     try {
-      // Check if the API key is set in the environment variables
+      setError(null);
       const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
       // Fetch current weather
       const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
       );
-      if (!weatherResponse.ok) throw new Error("Weather data fetch failed");
       const weatherData = await weatherResponse.json();
+
+      if (weatherData.cod !== 200) {
+        setError("Forecast not found");
+        setWeather(null);
+        setForecast(null);
+        return;
+      }
+
       setWeather(weatherData);
 
-      // Fetch forecast
+      // Fetch forecast data
       const forecastResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
       );
-      if (!forecastResponse.ok) throw new Error("Forecast data fetch failed");
       const forecastData = await forecastResponse.json();
+
+      if (forecastData.cod !== "200") {
+        setError("Forecast not found");
+        setForecast(null);
+        return;
+      }
+
       setForecast(forecastData);
     } catch (error) {
       console.error("Error fetching weather data:", error);
+      setError("Forecast not found");
       setWeather(null);
       setForecast(null);
     }
@@ -42,9 +67,14 @@ const App = () => {
 
   return (
     <div className="app">
-      {/* hello */}
       <SearchBar onSearch={setCity} />
-      <WeatherCard weather={weather} forecast={forecast} unit={unit} />
+      {error ? (
+        <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
+          <p className="text-xl text-red-600">{error}</p>
+        </div>
+      ) : (
+        <WeatherCard weather={weather} forecast={forecast} unit={unit} />
+      )}
       <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
         Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
       </button>
@@ -53,24 +83,3 @@ const App = () => {
 };
 
 export default App;
-
-// <div>
-// <a href="https://vite.dev" target="_blank">
-//   <img src={viteLogo} className="logo" alt="Vite logo" />
-// </a>
-// <a href="https://react.dev" target="_blank">
-//   <img src={reactLogo} className="logo react" alt="React logo" />
-// </a>
-// </div>
-// <h1>Vite + React</h1>
-// <div className="card">
-// <button onClick={() => setCount((count) => count + 1)}>
-//   count is {count}
-// </button>
-// <p>
-//   Edit <code>src/App.jsx</code> and save to test HMR
-// </p>
-// </div>
-// <p className="read-the-docs">
-// Click on the Vite and React logos to learn more
-// </p>

@@ -83,3 +83,7 @@ const App = () => {
 };
 
 export default App;
+
+{
+  /* <WeeklyForecast forecastData={forecast} /> */
+}

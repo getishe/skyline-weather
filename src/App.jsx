@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
-import WeatherForecast from "./components/WeatherForecast.JSX";
+// import WeatherForecast from "./components/WeatherForecast.JSX";
 import "./App.css";
 
 /**
@@ -52,6 +52,18 @@ const App = () => {
     }
   };
 
+  // fetchforecast data whether the city changes
+  const fetchForecast = async (lat, lon) => {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=${unit}&appid=${API_KEY}`
+    );
+    const data = await response.json();
+    // if (data.cod !== "200")
+    //   throw new Error("Forecast not found");
+    // // setForecast(data.list);
+    return data;
+  };
+
   return (
     <div className="app">
       <SearchBar onSearch={setCity} />
@@ -65,7 +77,7 @@ const App = () => {
       <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
         Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
       </button>
-      <WeatherForecast />
+      {/* <WeatherForecast /> */}
     </div>
   );
 };

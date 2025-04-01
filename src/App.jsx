@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
-// import WeatherForecast from "./components/WeatherForecast.JSX";
+// import WeeklyForecast from "./components/WeeklyForecast";
 import "./App.css";
 
 /**
@@ -44,6 +44,15 @@ const App = () => {
       }
 
       setWeather(weatherData);
+
+      // fetch fetch weekly forecast using latitude and longitude
+      const { lat, lon } = weatherData.coord;
+      const forecastResponse = await fetch(
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=${unit}&appid=${API_KEY}`
+      );
+
+      const forecastData = await forecastResponse.json();
+      setForecast(forecastData);
     } catch (error) {
       console.error("Error fetching weather data:", error);
       setError("Forecast not found");
@@ -83,7 +92,4 @@ const App = () => {
 };
 
 export default App;
-
-{
-  /* <WeeklyForecast forecastData={forecast} /> */
-}
+//  /* <WeeklyForecast forecastData={forecast} /> */

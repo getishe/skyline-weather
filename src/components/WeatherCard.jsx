@@ -58,6 +58,11 @@ const WeatherCard = ({ weather, forecast, unit }) => {
       {/* Additional weather details */}
       <p className="text-lg">Humidity: {weather.main.humidity}%</p>
       <p className="text-lg">Wind Speed: {weather.wind.speed} m/s</p>
+
+      {/* <p className="text-lg">Pressure: {weather.main.pressure} hPa</p>
+      <p className="text-lg">Visibility: {weather.visibility / 1000} km</p> */}
+
+      {/* Forecast data */}
     </div>
   );
 };

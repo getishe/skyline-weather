@@ -3,6 +3,7 @@ import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
 // import WeeklyForecast from "./components/WeeklyForecast";
 import "./App.css";
+import WeeklyForecast from "./components/WeeklyForecast";
 
 /**
  * Main App Component
@@ -48,10 +49,13 @@ const App = () => {
       // fetch fetch weekly forecast using latitude and longitude
       const { lat, lon } = weatherData.coord;
       const forecastResponse = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=${unit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
       );
 
       const forecastData = await forecastResponse.json();
+      if (forecastData.cod !== "200") {
+        throw new Error("forecast no found");
+      }
       setForecast(forecastData);
     } catch (error) {
       console.error("Error fetching weather data:", error);
@@ -81,7 +85,10 @@ const App = () => {
           <p className="text-xl text-red-600">{error}</p>
         </div>
       ) : (
-        <WeatherCard weather={weather} forecast={forecast} unit={unit} />
+        <>
+          <WeatherCard weather={weather} forecast={forecast} unit={unit} />
+          <WeeklyForecast forecastData={forecast} unit={unit} />
+        </>
       )}
       <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
         Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}

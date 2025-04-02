@@ -88,11 +88,15 @@ const App = () => {
         <>
           <WeatherCard weather={weather} forecast={forecast} unit={unit} />
           <WeeklyForecast forecastData={forecast} unit={unit} />
+
+          <button
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            onClick={() => setUnit(unit === "C" ? "F" : "C")}
+          >
+            Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
+          </button>
         </>
       )}
-      <button onClick={() => setUnit(unit === "C" ? "F" : "C")}>
-        Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
-      </button>
       {/* <WeatherForecast /> */}
     </div>
   );

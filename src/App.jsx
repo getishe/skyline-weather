@@ -62,16 +62,16 @@ const App = () => {
   };
 
   // fetchforecast data whether the city changes
-  const fetchForecast = async (lat, lon) => {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=${unit}&appid=${API_KEY}`
-    );
-    const data = await response.json();
-    // if (data.cod !== "200")
-    //   throw new Error("Forecast not found");
-    // // setForecast(data.list);
-    return data;
-  };
+  // const fetchForecast = async (lat, lon) => {
+  //   const response = await fetch(
+  //     `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=${unit}&appid=${API_KEY}`
+  //   );
+  //   const data = await response.json();
+  //   // if (data.cod !== "200")
+  //   //   throw new Error("Forecast not found");
+  //   // // setForecast(data.list);
+  //   return data;
+  // };
 
   return (
     <div className="app">

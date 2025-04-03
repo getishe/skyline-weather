@@ -1,3 +1,4 @@
+// Core React imports for state management and lifecycle
 import React, { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import WeatherCard from "./components/WeatherCard";
@@ -6,25 +7,55 @@ import "./App.css";
 import WeeklyForecast from "./components/WeeklyForecast";
 
 /**
+ * Architecture Overview:
+ * This is the main container component that:
+ * 1. Manages global state for the entire application
+ * 2. Handles API calls to OpenWeather
+ * 3. Distributes data to child components
+ *
+ * Data Flow:
+ * 1. User enters city in SearchBar
+ * 2. App fetches weather data using OpenWeather API
+ * 3. Data is passed down to WeatherCard and WeeklyForecast
+ * 4. User can toggle temperature units (C/F)
+ */
+
+/**
  * Main App Component
- * Manages the application state and coordinates between components
+ * Serves as the root component that:
+ * - Manages global state (weather, city, unit, forecast, error)
+ * - Coordinates data fetching
+ * - Handles temperature unit conversion
  */
 const App = () => {
-  // State Management
-  const [weather, setWeather] = useState(null); // Current weather data
-  const [city, setCity] = useState("London"); // Selected city
-  const [unit, setUnit] = useState("C"); // Temperature unit (C/F)
-  const [forecast, setForecast] = useState(null); // Forecast data
-  const [error, setError] = useState(null); // Error state
+  /**
+   * State Management:
+   * - weather: Current weather conditions
+   * - city: Currently selected city
+   * - unit: Temperature unit (C/F)
+   * - forecast: 7-day forecast data
+   * - error: Error state for API calls
+   */
+  // State declarations with their purposes
+  const [weather, setWeather] = useState(null); // Stores current weather data
+  const [city, setCity] = useState("Addis Ababa"); // Tracks selected/searched city
+  const [unit, setUnit] = useState("C"); // Temperature unit (Celsius/Fahrenheit)
+  const [forecast, setForecast] = useState(null); // Stores 7-day forecast data
+  const [error, setError] = useState(null); // Manages error states
 
-  // Fetch weather data when city changes
+  /**
+   * Effect hook that triggers weather fetch when city changes
+   * This ensures new data is loaded whenever the user searches for a new city
+   */
   useEffect(() => {
     fetchWeather(city);
   }, [city]);
 
   /**
-   * Fetches both current weather and forecast data from OpenWeather API
-   * @param {string} city - City name to fetch weather for
+   * Fetches both current weather and forecast data
+   * @param {string} city - Target city name
+   * Uses OpenWeather API with environment variables for API key
+   * Handles both success and error cases
    */
   const fetchWeather = async (city) => {
     try {
@@ -77,6 +108,14 @@ const App = () => {
   //   return data;
   // };
 
+  /**
+   * Main render method
+   * Conditionally renders:
+   * - Search bar (always)
+   * - Error message (when error exists)
+   * - Weather card and forecast (when data exists)
+   * - Unit toggle button
+   */
   return (
     <div className="app">
       <SearchBar onSearch={setCity} />

@@ -4,18 +4,55 @@ import config from "../config/config";
 
 /**
  * SearchBar Component
- * Handles user input for searching cities
- * @param {Function} onSearch - Callback function to handle search
+ * Purpose: Handles city search functionality
+ *
+ * Props:
+ * @param {Function} onSearch - Callback to parent for city updates
+ *
+ * Features:
+ * - Maintains local state for input field
+ * - Handles form submission
+ * - Makes API calls for weather data
+ * - Manages loading and error states
+ * - Processes forecast data
+ * - Prevents empty searches
  */
+
+/**
+ * Component Purpose:
+ * Handles user input for city searches
+ *
+ * Data Flow:
+ * 1. User enters city name
+ * 2. Form submission triggers handleSubmit
+ * 3. API call is made to fetch forecast
+ * 4. Results are processed and passed to parent
+ *
+ * Error Handling:
+ * - Prevents empty searches
+ * - Handles API errors
+ * - Shows loading states
+ *
+ * Data Processing:
+ * - Filters forecast data to one reading per day
+ * - Formats dates and temperatures
+ * - Prepares data for WeeklyForecast component
+ */
+
 const SearchBar = ({ onSearch }) => {
-  const [city, setCity] = useState(""); // Local state for input field
-  const [forecastData, setForecastData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // Local state management
+  const [city, setCity] = useState(""); // Tracks input field value
+  const [forecastData, setForecastData] = useState(null); // Stores processed forecast
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null); // Error handling
 
   /**
-   * Handle form submission
-   * @param {Event} e - Form submit event
+   * Form submission handler
+   * - Prevents default form behavior
+   * - Validates input
+   * - Makes API call
+   * - Processes response
+   * - Updates parent component
    */
   const handleSubmit = async (e) => {
     e.preventDefault();

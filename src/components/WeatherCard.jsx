@@ -2,11 +2,39 @@ import React from "react";
 
 /**
  * WeatherCard Component
- * Displays current weather information
- * @param {Object} weather - Weather data from API
- * @param {object} forecast - weekly forecast dat from API
+ * Purpose: Displays current weather information for a selected city
+ *
+ * Props:
+ * @param {Object} weather - Current weather data from OpenWeather API
+ * @param {Object} forecast - Forecast data (unused in current implementation)
  * @param {string} unit - Temperature unit (C/F)
+ *
+ * Features:
+ * - Displays weather icon
+ * - Shows city name
+ * - Shows weather description
+ * - Displays temperature
+ * - Shows humidity and wind speed
+ * - Handles loading and error states
  */
+
+/**
+ * Component Responsibility:
+ * Displays current weather data in a card format
+ *
+ * Data Flow:
+ * 1. Receives weather data and unit preference from App.jsx
+ * 2. Performs null checks and error handling
+ * 3. Renders weather information in organized sections
+ *
+ * Display Sections:
+ * - Weather icon from OpenWeather
+ * - City name
+ * - Current temperature
+ * - Weather description
+ * - Humidity and wind data
+ */
+
 const WeatherCard = ({ weather, forecast, unit }) => {
   // Debug logging
   console.log("Weather object:", weather);
@@ -24,17 +52,17 @@ const WeatherCard = ({ weather, forecast, unit }) => {
     );
   }
   // Helper function to format date
-  const formatDate = (timestamp) => {
-    return new Date(timestamp * 1000).toLocaleDateString("en-us", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-    });
-  };
+  // const formatDate = (timestamp) => {
+  //   return new Date(timestamp * 1000).toLocaleDateString("en-us", {
+  //     weekday: "short",
+  //     month: "short",
+  //     day: "numeric",
+  //   });
+  // };
 
-  const convertTemp = (temp) => {
-    return unit === "C" ? temp : (temp * 9) / 5 + 32;
-  };
+  // const convertTemp = (temp) => {
+  //   return unit === "C" ? temp : (temp * 9) / 5 + 32;
+  // };
 
   // Main weather display
   return (
@@ -63,6 +91,7 @@ const WeatherCard = ({ weather, forecast, unit }) => {
       <p className="text-lg">Visibility: {weather.visibility / 1000} km</p> */}
 
       {/* Forecast data */}
+      <h2 className="text-xl font-semibold mt-4">other cities </h2>
     </div>
   );
 };

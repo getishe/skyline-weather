@@ -91,7 +91,7 @@ const WeatherCard = ({ weather, forecast, unit }) => {
       <p className="text-lg">Visibility: {weather.visibility / 1000} km</p> */}
 
       {/* Forecast data */}
-      <h2 className="text-xl font-semibold mt-4">other cities </h2>
+      {/* <h2 className="text-xl font-semibold mt-4">other cities </h2> */}
     </div>
   );
 };

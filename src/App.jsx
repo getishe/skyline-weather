@@ -5,7 +5,7 @@ import WeatherCard from "./components/WeatherCard";
 // import WeeklyForecast from "./components/WeeklyForecast";
 import "./App.css";
 import WeeklyForecast from "./components/WeeklyForecast";
-
+import WeatherChart from "./components/WeatherChart";
 /**
  * Architecture Overview:
  * This is the main container component that:
@@ -117,7 +117,7 @@ const App = () => {
    * - Unit toggle button
    */
   return (
-    <div className="app">
+    <div className="bg-gray-100 grid grid-cols-2 gap-4 p-4">
       <SearchBar onSearch={setCity} />
       {error ? (
         <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
@@ -127,7 +127,7 @@ const App = () => {
         <>
           <WeatherCard weather={weather} forecast={forecast} unit={unit} />
           <WeeklyForecast forecastData={forecast} unit={unit} />
-
+          <WeatherChart forecastData={forecast} unit={unit} />
           <button
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             onClick={() => setUnit(unit === "C" ? "F" : "C")}

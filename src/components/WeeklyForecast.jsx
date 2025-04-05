@@ -72,29 +72,34 @@ const WeeklyForecast = ({ forecastData, unit }) => {
   };
 
   return (
-    <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-white rounded-lg shadow-xl">
+    <div className="mx-auto max-w-screen-xl mt-4 py-5 px-7  bg-white rounded-lg shadow-xl ">
       <h2 className="text-xl font-semibold mb-4">7-Day Forecast</h2>
-      <div className="grid grid-cols-7 gap-4">
-        {Object.values(dailyForecasts)
-          .slice(0, 7)
-          .map((day, index) => (
-            <div key={index} className="text-center p-2 bg-gray-50 rounded-md">
-              <div className="font-medium">{formatDate(day.dt)}</div>
-              <img
-                src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                alt={day.weather[0].description}
-                className="w-12 h-12 mx-auto"
-              />
-              <div className="text-sm">
-                <span className="font-bold">
-                  {Math.round(convertTemp(day.main.temp))}°{unit}
-                </span>
+      <div className="flex justify-center items-center h-full ">
+        <div className="grid grid-cols-7 gap-4 w-full max-w-screen-lg ">
+          {Object.values(dailyForecasts)
+            .slice(0, 7)
+            .map((day, index) => (
+              <div
+                key={index}
+                className="text-center p-2 bg-gray-50 rounded-md"
+              >
+                <div className="font-medium">{formatDate(day.dt)}</div>
+                <img
+                  src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                  alt={day.weather[0].description}
+                  className="w-12 h-12 mx-auto"
+                />
+                <div className="text-sm">
+                  <span className="font-bold">
+                    {Math.round(convertTemp(day.main.temp))}°{unit}
+                  </span>
+                </div>
+                <div className="text-xs text-gray-600">
+                  {day.weather[0].description}
+                </div>
               </div>
-              <div className="text-xs text-gray-600">
-                {day.weather[0].description}
-              </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </div>
   );

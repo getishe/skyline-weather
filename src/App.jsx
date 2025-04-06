@@ -117,7 +117,7 @@ const App = () => {
    * - Unit toggle button
    */
   return (
-    <div className="bg-gray-100 grid grid-cols-2 gap-4 p-4">
+    <div className="bg-gray-100 gap-4 p-4">
       <SearchBar onSearch={setCity} />
       {error ? (
         <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
@@ -125,9 +125,13 @@ const App = () => {
         </div>
       ) : (
         <>
-          <WeatherCard weather={weather} forecast={forecast} unit={unit} />
-          <WeeklyForecast forecastData={forecast} unit={unit} />
-          <WeatherChart forecastData={forecast} unit={unit} />
+          <div className=" grid grid-cols-2">
+            <WeatherCard weather={weather} forecast={forecast} unit={unit} />
+            <WeatherChart forecastData={forecast} unit={unit} />
+            <div className="col-span-3 ...">
+              <WeeklyForecast forecastData={forecast} unit={unit} />
+            </div>
+          </div>
           <button
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             onClick={() => setUnit(unit === "C" ? "F" : "C")}

@@ -94,7 +94,7 @@ const WeatherChart = ({ forecastData, unit }) => {
   };
   return (
     <div>
-      <h2>7-Day Weather Forecast</h2>
+      <h2 className="mt-6">7-Day Weather Forecast</h2>
       <Line data={data} options={options} />
     </div>
   );

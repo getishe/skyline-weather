@@ -66,32 +66,34 @@ const WeatherCard = ({ weather, forecast, unit }) => {
 
   // Main weather display
   return (
-    <div className="mx-4   mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
+    <div className="mx-7 mt-4 py-5 px-8 bg-gray-300 rounded-lg shadow-xl lg:mx-2 lg:py-5 lg:px-32">
       {/* Weather icon */}
-      <img
-        src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-        alt={weather.weather[0].description}
-      />
-      {/* City name */}
-      <h1 className="text-2xl font-bold">{weather.name}</h1>
+      <div className=" py-4">
+        <img
+          src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+          alt={weather.weather[0].description}
+        />
+        {/* City name */}
+        <h1 className="text-2xl font-bold">{weather.name}</h1>
 
-      {/* Weather description */}
-      <p className="text-lg">{weather.weather[0].description}</p>
+        {/* Weather description */}
+        <p className="text-lg">{weather.weather[0].description}</p>
 
-      {/* Temperature */}
-      <p className="text-lg">
-        {weather.main.temp}°{unit}
-      </p>
+        {/* Temperature */}
+        <p className="text-lg">
+          {weather.main.temp}°{unit}
+        </p>
 
-      {/* Additional weather details */}
-      <p className="text-lg">Humidity: {weather.main.humidity}%</p>
-      <p className="text-lg">Wind Speed: {weather.wind.speed} m/s</p>
+        {/* Additional weather details */}
+        <p className="text-lg">Humidity: {weather.main.humidity}%</p>
+        <p className="text-lg">Wind Speed: {weather.wind.speed} m/s</p>
 
-      {/* <p className="text-lg">Pressure: {weather.main.pressure} hPa</p>
+        {/* <p className="text-lg">Pressure: {weather.main.pressure} hPa</p>
       <p className="text-lg">Visibility: {weather.visibility / 1000} km</p> */}
 
-      {/* Forecast data */}
-      {/* <h2 className="text-xl font-semibold mt-4">other cities </h2> */}
+        {/* Forecast data */}
+        {/* <h2 className="text-xl font-semibold mt-4">other cities </h2> */}
+      </div>
     </div>
   );
 };

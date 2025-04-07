@@ -96,8 +96,8 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className=" mx-auto max-w-screen-xl mt-4 py-5 px-32  bg-gray-300 rounded-lg shadow-xl">
-      <div className="flex  flex-row justify-between gap-x-6 mb-4 px-4 py-2 items-center">
+    <div className=" mx-auto max-w-screen-xl mt-4 py-5  bg-gray-300 rounded-lg shadow-xl px-4 ">
+      <div className="flex  flex-row justify-between gap-x-6 mb-4 px-4 py-2 items-center ">
         <h1 className="text-2xl font-bold text-blue-600">Skyline</h1>
         <form onSubmit={handleSubmit} className="w-full max-w-md">
           <div className="flex gap-x-8">

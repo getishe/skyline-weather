@@ -117,7 +117,7 @@ const App = () => {
    * - Unit toggle button
    */
   return (
-    <div className="bg-gray-100 gap-4 p-4">
+    <div className="bg-gray-100 gap-4 p-4 px-4 py-4 min-h-screen">
       <SearchBar onSearch={setCity} />
       {error ? (
         <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">

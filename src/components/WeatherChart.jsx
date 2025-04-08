@@ -93,8 +93,8 @@ const WeatherChart = ({ forecastData, unit }) => {
     responsive: true,
   };
   return (
-    <div>
-      <h2 className="mt-6">7-Day Weather Forecast</h2>
+    <div className=" mt-4 py-5 bg-gray-300 rounded-lg shadow-xl ">
+      <h2 className="mt-6 px-3">7-Day Weather Forecast</h2>
       <Line data={data} options={options} />
     </div>
   );

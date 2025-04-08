@@ -72,7 +72,7 @@ const WeeklyForecast = ({ forecastData, unit }) => {
   };
 
   return (
-    <div className="mx-auto max-w-screen-xl mt-4 py-5 px-7  bg-white rounded-lg shadow-xl ">
+    <div className="mx-auto max-w-screen-xl mt-4  px-7  bg-white rounded-lg shadow-xl ">
       <h2 className="text-xl font-semibold mb-4">7-Day Forecast</h2>
       <div className="flex justify-center items-center h-full ">
         <div className="grid grid-cols-7 gap-4 w-full max-w-screen-lg ">

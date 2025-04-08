@@ -117,7 +117,7 @@ const App = () => {
    * - Unit toggle button
    */
   return (
-    <div className="bg-gray-100 gap-4 p-4 px-4 py-4 min-h-screen">
+    <div className="bg-gray-100 gap-4 p-4 px-4 py-4 mx-auto max-w-screem-xl">
       <SearchBar onSearch={setCity} />
       {error ? (
         <div className="mx-auto max-w-screen-xl mt-4 py-5 px-32 bg-gray-300 rounded-lg shadow-xl">
@@ -125,9 +125,10 @@ const App = () => {
         </div>
       ) : (
         <>
-          <div className=" grid grid-cols-2">
+          <div className=" grid grid-cols- lg:grid-cols-2 gap-4 py-1 px-4 mx-auto">
             <WeatherCard weather={weather} forecast={forecast} unit={unit} />
             <WeatherChart forecastData={forecast} unit={unit} />
+
             <div className="col-span-3 ...">
               <WeeklyForecast forecastData={forecast} unit={unit} />
             </div>

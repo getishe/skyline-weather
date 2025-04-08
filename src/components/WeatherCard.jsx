@@ -68,7 +68,7 @@ const WeatherCard = ({ weather, forecast, unit }) => {
   return (
     <div className=" max-w-md mx-auto  mt-4 bg-gray-300 rounded-lg shadow-xl  ">
       {/* Weather icon */}
-      <div className=" px-32 py-9">
+      <div className=" px-12 py-9 sm:px-19 sm:py-21">
         <img
           src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
           alt={weather.weather[0].description}

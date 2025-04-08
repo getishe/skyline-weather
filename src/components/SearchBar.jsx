@@ -96,21 +96,23 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className=" mx-auto max-w-screen-xl mt-4 py-5  bg-gray-300 rounded-lg shadow-xl px-4 ">
-      <div className="flex  flex-row justify-between gap-x-6 mb-4 px-4 py-2 items-center ">
+    <div className=" mx-auto max-w-screen-xl mt-4 py-5  bg-gray-300 rounded-lg shadow-xl px-9 ">
+      <div className="flex  flex-col sm:flex-row justify-between gap-4 sm:gap-x-6 mb-4 items-center ">
         <h1 className="text-2xl font-bold text-blue-600">Skyline</h1>
         <form onSubmit={handleSubmit} className="w-full max-w-md">
-          <div className="flex gap-x-8">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-x-8">
             <input
               type="text"
               placeholder="Enter city name..."
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              // className="flex-1 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              // className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Search
             </button>

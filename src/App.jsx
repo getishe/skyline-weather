@@ -155,7 +155,7 @@ const App = () => {
         backgroundBlend: "overlay",
       }}
     >
-      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4">
+      <div className="bg-white/30 backdrop-blur-sm rounded-lg p-4">
         <SearchBar onSearch={setCity} />
         {loading ? (
           <div className="text-center p-4">

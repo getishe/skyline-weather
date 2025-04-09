@@ -75,7 +75,7 @@ const WeeklyForecast = ({ forecastData, unit }) => {
     <div className="mx-auto max-w-screen-xl mt-4  px-7  bg-white rounded-lg shadow-xl">
       <h2 className="text-xl font-semibold mb-4">7-Day Forecast</h2>
       <div className="flex justify-center items-center h-full  rounded-lg m-3 ">
-        <div className="grid grid-cols-2 gap-4 w-full max-w-screen-lg  sm:grid-cols-4  md:grid-cols-2 lg:grid-cols-7 xl:grid-cols-7">
+        <div className="grid grid-cols-2 gap-4 w-full max-w-screen-lg  sm:grid-cols-4  md:grid-cols-2 lg:grid-cols-7 xl:grid-cols-7 p-3">
           {Object.values(dailyForecasts)
             .slice(0, 7)
             .map((day, index) => (

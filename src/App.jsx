@@ -42,12 +42,17 @@ const App = () => {
   const [unit, setUnit] = useState("C"); // Temperature unit (Celsius/Fahrenheit)
   const [forecast, setForecast] = useState(null); // Stores 7-day forecast data
   const [error, setError] = useState(null); // Manages error states
+  // const [city, setCity] = useState(() => {
+  //   const savedCity = JSON.parse(localStorage.getItem("city")) || "Addis Ababa";
+  //   return savedCity;
+  // });
 
   /**
    * Effect hook that triggers weather fetch when city changes
    * This ensures new data is loaded whenever the user searches for a new city
    */
   useEffect(() => {
+    // localStorage.setItem("city", JSON.stringify(city));
     fetchWeather(city);
   }, [city]);
 

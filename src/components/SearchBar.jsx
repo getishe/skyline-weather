@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import WeeklyForecast from "./WeeklyForecast";
 import config from "../config/config";
 
@@ -45,6 +45,24 @@ const SearchBar = ({ onSearch }) => {
   const [forecastData, setForecastData] = useState(null); // Stores processed forecast
   const [isLoading, setIsLoading] = useState(false); // Loading state
   const [error, setError] = useState(null); // Error handling
+  const [recentSearches, setRecentSearches] = useState([]); // Tracks recent searches
+
+  // Load recent searches from local storage on component mount
+  useEffect(() => {
+    const storedSearches =
+      JSON.parse(localStorage.getItem("recentSearches")) || [];
+    setRecentSearches(storedSearches);
+  }, []);
+
+  // Save recent searches to local storage
+  const saveRecentSearch = (city) => {
+    const updatedSearches = [
+      city,
+      ...recentSearches.filter((item) => item !== city),
+    ].slice(0, 5);
+    setRecentSearches(updatedSearches);
+    localStorage.setItem("recentSearches", JSON.stringify(updatedSearches));
+  };
 
   /**
    * Form submission handler
@@ -86,6 +104,7 @@ const SearchBar = ({ onSearch }) => {
 
       setForecastData(processedData);
       onSearch(city.trim());
+      saveRecentSearch(city.trim());
       setCity("");
     } catch (error) {
       setError(error.message);
@@ -106,12 +125,16 @@ const SearchBar = ({ onSearch }) => {
               placeholder="Enter city name..."
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              // className="flex-1 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              list="recent-searches"
             />
+            <datalist id="recent-searches">
+              {recentSearches.map((search, index) => (
+                <option key={index} value={search} />
+              ))}
+            </datalist>
             <button
               type="submit"
-              // className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               className="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Search

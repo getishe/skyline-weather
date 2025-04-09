@@ -6,6 +6,7 @@ import WeatherCard from "./components/WeatherCard";
 import "./App.css";
 import WeeklyForecast from "./components/WeeklyForecast";
 import WeatherChart from "./components/WeatherChart";
+
 /**
  * Architecture Overview:
  * This is the main container component that:
@@ -27,6 +28,19 @@ import WeatherChart from "./components/WeatherChart";
  * - Coordinates data fetching
  * - Handles temperature unit conversion
  */
+
+// Weather background mapping
+const weatherBackgrounds = {
+  Clear:
+    "url('https://images.unsplash.com/photo-1601297183305-6df142704ea2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80')",
+  Clouds:
+    "url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2002&q=80')",
+  Rain: "url('https://images.unsplash.com/photo-1519692933481-e162a57d6721?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')",
+  Snow: "url('https://images.unsplash.com/photo-1491002052546-bf38f186af56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2008&q=80')",
+  default:
+    "url('https://images.unsplash.com/photo-1601297183305-6df142704ea2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80')",
+};
+
 const App = () => {
   /**
    * State Management:
@@ -42,17 +56,13 @@ const App = () => {
   const [unit, setUnit] = useState("C"); // Temperature unit (Celsius/Fahrenheit)
   const [forecast, setForecast] = useState(null); // Stores 7-day forecast data
   const [error, setError] = useState(null); // Manages error states
-  // const [city, setCity] = useState(() => {
-  //   const savedCity = JSON.parse(localStorage.getItem("city")) || "Addis Ababa";
-  //   return savedCity;
-  // });
+  const [weatherCondition, setWeatherCondition] = useState("default"); // Tracks current weather condition
 
   /**
    * Effect hook that triggers weather fetch when city changes
    * This ensures new data is loaded whenever the user searches for a new city
    */
   useEffect(() => {
-    // localStorage.setItem("city", JSON.stringify(city));
     fetchWeather(city);
   }, [city]);
 
@@ -81,6 +91,7 @@ const App = () => {
       }
 
       setWeather(weatherData);
+      setWeatherCondition(weatherData.weather[0].main); // Set weather condition
 
       // fetch fetch weekly forecast using latitude and longitude
       const { lat, lon } = weatherData.coord;
@@ -101,18 +112,6 @@ const App = () => {
     }
   };
 
-  // fetchforecast data whether the city changes
-  // const fetchForecast = async (lat, lon) => {
-  //   const response = await fetch(
-  //     `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=${unit}&appid=${API_KEY}`
-  //   );
-  //   const data = await response.json();
-  //   // if (data.cod !== "200")
-  //   //   throw new Error("Forecast not found");
-  //   // // setForecast(data.list);
-  //   return data;
-  // };
-
   /**
    * Main render method
    * Conditionally renders:
@@ -122,33 +121,41 @@ const App = () => {
    * - Unit toggle button
    */
   return (
-    <div className="p-2 sm:p-4 mx-auto max-w-screen-xl">
-      <SearchBar onSearch={setCity} />
-      {error ? (
-        <div className="mx-auto mt-4 p-4 bg-gray-300 rounded-lg shadow-xl">
-          <p className="text-xl text-red-600">{error}</p>
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 sm:p-4">
-            <WeatherCard weather={weather} forecast={forecast} unit={unit} />
-            <WeatherChart forecastData={forecast} unit={unit} />
-            <div className="md:col-span-2">
-              <WeeklyForecast forecastData={forecast} unit={unit} />
-            </div>
+    <div
+      className="min-h-screen p-2 sm:p-4 mx-auto max-w-screen-xl bg-cover bg-center bg-no-repeat transition-all duration-500"
+      style={{
+        backgroundImage:
+          weatherBackgrounds[weatherCondition] || weatherBackgrounds.default,
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundBlend: "overlay",
+      }}
+    >
+      <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4">
+        <SearchBar onSearch={setCity} />
+        {error ? (
+          <div className="mx-auto mt-4 p-4 bg-gray-300 rounded-lg shadow-xl">
+            <p className="text-xl text-red-600">{error}</p>
           </div>
-          <button
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={() => setUnit(unit === "C" ? "F" : "C")}
-          >
-            Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
-          </button>
-        </>
-      )}
-      {/* <WeatherForecast /> */}
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-2 sm:p-4">
+              <WeatherCard weather={weather} forecast={forecast} unit={unit} />
+              <WeatherChart forecastData={forecast} unit={unit} />
+              <div className="md:col-span-2">
+                <WeeklyForecast forecastData={forecast} unit={unit} />
+              </div>
+            </div>
+            <button
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              onClick={() => setUnit(unit === "C" ? "F" : "C")}
+            >
+              Switch to {unit === "C" ? "Fahrenheit" : "Celsius"}
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };
 
 export default App;
-//  /* <WeeklyForecast forecastData={forecast} /> */

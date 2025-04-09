@@ -57,6 +57,8 @@ const App = () => {
   const [forecast, setForecast] = useState(null); // Stores 7-day forecast data
   const [error, setError] = useState(null); // Manages error states
   const [weatherCondition, setWeatherCondition] = useState("default"); // Tracks current weather condition
+  const [loading, setLoading] = useState(false); // Add loading state
+  const [weatherCache, setWeatherCache] = useState({}); // Add cache
 
   /**
    * Effect hook that triggers weather fetch when city changes
@@ -73,6 +75,21 @@ const App = () => {
    * Handles both success and error cases
    */
   const fetchWeather = async (city) => {
+    if (!city.trim()) {
+      setError("Please enter a valid city name");
+      return;
+    }
+
+    // Check cache first
+    const cacheKey = `${city}_${new Date().getHours()}`;
+    if (weatherCache[cacheKey]) {
+      setWeather(weatherCache[cacheKey].weather);
+      setForecast(weatherCache[cacheKey].forecast);
+      setWeatherCondition(weatherCache[cacheKey].weather.weather[0].main);
+      return;
+    }
+
+    setLoading(true);
     try {
       setError(null);
       const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
@@ -104,11 +121,19 @@ const App = () => {
         throw new Error("forecast no found");
       }
       setForecast(forecastData);
+
+      // Cache the results
+      setWeatherCache((prev) => ({
+        ...prev,
+        [cacheKey]: { weather: weatherData, forecast: forecastData },
+      }));
     } catch (error) {
       console.error("Error fetching weather data:", error);
       setError("Forecast not found");
       setWeather(null);
       setForecast(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,7 +157,11 @@ const App = () => {
     >
       <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4">
         <SearchBar onSearch={setCity} />
-        {error ? (
+        {loading ? (
+          <div className="text-center p-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+          </div>
+        ) : error ? (
           <div className="mx-auto mt-4 p-4 bg-gray-300 rounded-lg shadow-xl">
             <p className="text-xl text-red-600">{error}</p>
           </div>

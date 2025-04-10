@@ -93,10 +93,11 @@ const App = () => {
     try {
       setError(null);
       const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+      const BASE_PATH = import.meta.env.VITE_BASE_PATH;
 
       // Fetch current weather
       const weatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+        `${BASE_PATH}/weather?q=${city}&appid=${API_KEY}&units=metric`
       );
       const weatherData = await weatherResponse.json();
 
@@ -113,7 +114,7 @@ const App = () => {
       // fetch fetch weekly forecast using latitude and longitude
       const { lat, lon } = weatherData.coord;
       const forecastResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+        `${BASE_PATH}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
       );
 
       const forecastData = await forecastResponse.json();

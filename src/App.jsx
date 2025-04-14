@@ -52,7 +52,7 @@ const App = () => {
    */
   // State declarations with their purposes
   const [weather, setWeather] = useState(null); // Stores current weather data
-  const [city, setCity] = useState("Addis Ababa"); // Tracks selected/searched city
+  const [city, setCity] = useState(null); // Tracks selected/searched city
   const [unit, setUnit] = useState("C"); // Temperature unit (Celsius/Fahrenheit)
   const [forecast, setForecast] = useState(null); // Stores 7-day forecast data
   const [error, setError] = useState(null); // Manages error states
@@ -65,7 +65,42 @@ const App = () => {
    * This ensures new data is loaded whenever the user searches for a new city
    */
   useEffect(() => {
-    fetchWeather(city);
+    if (city) {
+      fetchWeather(city);
+    } else {
+      setLoading(true); // Set loading state when starting geolocation
+      // Get user's location when no city is selected
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords; // Fixed: using longitude instead of lon
+          try {
+            const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+            const BASE_PATH = import.meta.env.VITE_BASE_PATH;
+            const response = await fetch(
+              `${BASE_PATH}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+            );
+            const data = await response.json();
+            if (data.name) {
+              setCity(data.name);
+            }
+          } catch (error) {
+            console.error("Error getting location weather:", error);
+            setError("Could not get weather for your location");
+            setLoading(false);
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          setError("Could not get your location");
+          setLoading(false);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        }
+      );
+    }
   }, [city]);
 
   /**

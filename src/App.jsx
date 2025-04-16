@@ -224,3 +224,36 @@ const App = () => {
 };
 
 export default App;
+
+// <h1>Shopping Chart</h1>
+// <button id="click">Click Me</button>
+// <div class='crat'>
+//   <ul>
+//     <li>Item Price: $<span id="price"></span></li>
+//   </ul>
+// </div>
+// <p>Total Price: $<span id="total"></span></p>
+
+// document.addEventListener("DOMContentLoaded", function() {
+//   const clickButton = document.querySelector('#click');
+//   const priceSpan = document.querySelector('#price');
+//   const totalSpan = document.querySelector('#total');
+
+//   let totalPrice = 0; // Variable to store the total price
+
+//   clickButton.addEventListener('click', function() {
+//     const itemPrice = 10; // Price of the item
+//     totalPrice += itemPrice; // Update total price
+
+//     // Update the price span
+//     priceSpan.textContent = itemPrice;
+
+//     // Create a new paragraph for the item price
+//     const p = document.createElement('p');
+//     p.textContent = `Item: $${itemPrice}`;
+//     document.querySelector('.crat').appendChild(p);
+
+//     // Update the total price span
+//     totalSpan.textContent = totalPrice;
+//   });
+// });

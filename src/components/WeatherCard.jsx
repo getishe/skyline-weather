@@ -51,20 +51,7 @@ const WeatherCard = ({ weather, forecast, unit }) => {
       </div>
     );
   }
-  // Helper function to format date
-  // const formatDate = (timestamp) => {
-  //   return new Date(timestamp * 1000).toLocaleDateString("en-us", {
-  //     weekday: "short",
-  //     month: "short",
-  //     day: "numeric",
-  //   });
-  // };
 
-  // const convertTemp = (temp) => {
-  //   return unit === "C" ? temp : (temp * 9) / 5 + 32;
-  // };
-
-  // Main weather display
   return (
     <div className=" max-w-md mx-auto  mt-4 bg-gray-300 rounded-lg shadow-xl  ">
       {/* Weather icon */}

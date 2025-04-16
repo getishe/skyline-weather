@@ -32,24 +32,8 @@ const WeatherChart = ({ forecastData, unit }) => {
     return acc;
   }, {});
 
-  //   const labels = Object.keys(dailyForecasts);
-  //   const temperatures = Object.values(dailyForecasts).map((item) =>
-  //     unit === "C"
-  //       ? item.main.temp - 273.15
-  //       : (item.main.temp - 273.15) * (9 / 5) + 32
-  //   );
-
   const labels = Object.keys(dailyForecasts);
   const temperatures = Object.values(dailyForecasts).map((item) => {
-    //     if (unit === "C") {
-    //       return item.main.temp - 273.15;
-    //     } else if (unit === "F") {
-    //       return (item.main.temp - 273.15) * (9 / 5) + 32;
-    //     } else {
-    //       return Math.round(temp * 10) / 10;
-    //     }
-    //   });
-    // .map((item) => {
     const temp =
       unit === "C"
         ? item.main.temp - 273.15
